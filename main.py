@@ -27,37 +27,40 @@ from date.get_future_date import get_future_date
 if __name__ == '__main__':
 
 
-  catering_orders = get_catering(options={
+  # catering_orders = get_catering(options={
+  #   'files': {
+  #     'tomorrow': {
+  #       'label': 'tomorrow',
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'catering', 'tomorrow.pdf')
+  #     }
+  #   }
+  # })
+
+
+  # failsafe(slack_message, options={
+  #   'username': os.environ['SLACK_USERNAME'],
+  #   'password': os.environ['SLACK_PASSWORD'],
+  #   'account': 'test'
+  # })
+
+  cems = get_cems(options={
     'files': {
-      'tomorrow': {
-        'label': 'tomorrow',
-        'path': './downloads/cfa/southroads/catering/tomorrow.pdf'
+      'ytd': {
+        'label': 'ytd',
+        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ytd.pdf')
+      },
+      'ndr': {
+        'label': 'ndr',
+        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ndr.pdf')
+      },
+      'mtd': {
+        'label': 'mtd',
+        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'mtd.pdf')
       }
     }
   })
 
-  failsafe(slack_message, options={
-    'username': os.environ['SLACK_USERNAME'],
-    'password': os.environ['SLACK_PASSWORD'],
-    'workspace_url': 'https://testing-hkz9125.slack.com'
-  })
-
-  # cems = get_cems(options={
-  #   'files': {
-  #     'ytd': {
-  #       'label': 'ytd',
-  #       'path': './downloads/cfa/southroads/cems/ytd.pdf'
-  #     },
-  #     'ndr': {
-  #       'label': 'ndr',
-  #       'path': './downloads/cfa/southroads/cems/ndr.pdf'
-  #     },
-  #     'mtd': {
-  #       'label': 'mtd',
-  #       'path': './downloads/cfa/southroads/cems/mtd.pdf'
-  #     }
-  #   }
-  # })
+  print(cems)
 
 
   # failsafe(download_cems, options={
@@ -67,27 +70,26 @@ if __name__ == '__main__':
   #     'ytd': {
   #       'start': format_date(get_first_date_of_year()),
   #       'end': format_date(get_last_date_of_year()),
-  #       'path': f'./downloads/cfa/southroads/cems/ytd.pdf',
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ytd.pdf')
   #     },
   #     'ndr': {
   #       'start': format_date(get_past_date(90)),
   #       'end': format_date(get_past_date(0)),
-  #       'path': f'./downloads/cfa/southroads/cems/ndr.pdf'
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ndr.pdf')
   #     },
   #     'mtd': {
   #       'start': format_date(get_first_date_of_month()),
   #       'end': format_date(get_last_date_of_month()),
-  #       'path': f'./downloads/cfa/southroads/cems/mtd.pdf'
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'mtd.pdf')
   #     }
   #   }
   # })
 
 
   # failsafe(groupme_message, options={
-  #   'username': os.environ['GROUPME_TESTING_USERNAME'], 
-  #   'password': os.environ['GROUPME_TESTING_PASSWORD'], 
-  #   'chat_label': 'Chat testing',
-  #   'message': catering_message_list(catering_orders)
+  #   'account': 'test',
+  #   'message': catering_message_list(catering_orders),
+  #   'headless': True
   # })
 
   # failsafe(download_catering, options={
@@ -98,7 +100,7 @@ if __name__ == '__main__':
   #     'tomorrow': {
   #       'start': format_date(get_future_date(1)),
   #       'end': format_date(get_future_date(1)),
-  #       'path': './downloads/cfa/southroads/catering/tomorrow.pdf'
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'catering', 'tomorrow.pdf')
   #     }
   #   }
   # })

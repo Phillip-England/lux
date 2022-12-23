@@ -5,9 +5,12 @@ def slack_message(options):
 
   username = options['username']
   password = options['password']
-  workspace_url = options['workspace_url']
+  account = options['account']
+
+  if account == 'test': login_url = 'https://testing-hkz9125.slack.com/sign_in_with_password'
+  if account == 'southroads': login_url = 'https://cfasouthroads.slack.com/sign_in_with_password'
 
   with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=False)
     page = browser.new_page()
-    page = login(page, workspace_url, username, password)
+    page = login(page, login_url, username, password)

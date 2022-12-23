@@ -1,5 +1,5 @@
 import time
 
-def login(page, workspace, username, password):
-  page.goto('https://www.slack.com/workspace-signin')
-  time.sleep(10)
+def login(page, login_url, username, password):
+  page.goto(login_url)
+  time.sleep(20)
