@@ -1,0 +1,12 @@
+.env
+data/__pycache__
+date/__pycache__
+downloads
+lux/__pycache__
+message/__pycache__
+routes/cfa/__pycache__
+routes/groupme/__pycache__
+routes/slack/__pycache__
+scripts/cfa/__pycache__
+scripts/groupme/__pycache__
+scripts/slack/__pycache__

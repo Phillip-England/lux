@@ -27,14 +27,14 @@ from date.get_future_date import get_future_date
 if __name__ == '__main__':
 
 
-  # catering_orders = get_catering(options={
-  #   'files': {
-  #     'tomorrow': {
-  #       'label': 'tomorrow',
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'catering', 'tomorrow.pdf')
-  #     }
-  #   }
-  # })
+  catering_orders = get_catering(options={
+    'files': {
+      'tomorrow': {
+        'label': 'tomorrow',
+        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'catering', 'tomorrow.pdf')
+      }
+    }
+  })
 
 
   # failsafe(slack_message, options={
@@ -43,24 +43,23 @@ if __name__ == '__main__':
   #   'account': 'test'
   # })
 
-  cems = get_cems(options={
-    'files': {
-      'ytd': {
-        'label': 'ytd',
-        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ytd.pdf')
-      },
-      'ndr': {
-        'label': 'ndr',
-        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ndr.pdf')
-      },
-      'mtd': {
-        'label': 'mtd',
-        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'mtd.pdf')
-      }
-    }
-  })
+  # cems = get_cems(options={
+  #   'files': {
+  #     'ytd': {
+  #       'label': 'ytd',
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ytd.pdf')
+  #     },
+  #     'ndr': {
+  #       'label': 'ndr',
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ndr.pdf')
+  #     },
+  #     'mtd': {
+  #       'label': 'mtd',
+  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'mtd.pdf')
+  #     }
+  #   }
+  # })
 
-  print(cems)
 
 
   # failsafe(download_cems, options={
@@ -86,11 +85,11 @@ if __name__ == '__main__':
   # })
 
 
-  # failsafe(groupme_message, options={
-  #   'account': 'test',
-  #   'message': catering_message_list(catering_orders),
-  #   'headless': True
-  # })
+  failsafe(groupme_message, options={
+    'account': 'test',
+    'message': catering_message_list(catering_orders),
+    'headless': True
+  })
 
   # failsafe(download_catering, options={
   #   'username': os.environ['SOUTHROADS_USERNAME'], 

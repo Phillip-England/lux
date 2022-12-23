@@ -3,7 +3,6 @@ import time
 def message(page, chat_labels, message_list):
   print('Attempting to send message on groupme...')
   for label in chat_labels[0]:
-    print(label)
     page.click(f'button[aria-label="{label}"]')
     for line in message_list:
       if line == 'BREAK':

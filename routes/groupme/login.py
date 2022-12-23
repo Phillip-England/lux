@@ -8,17 +8,21 @@ def login(page, username, password):
   page.type('input#signinPasswordInput', password)
   page.keyboard.press('Enter')
 
-  # if it your first time loggin on with a new browser, you will need to use a pin
-  # the code below helps you submit your pin.
-  pin_popup = page.query_selector('div.modal-content')
+  # each time you use a new browser you will need to confirm a pin from your phone
+  # the below try:except waits for a popup
+  # if it finds it, you have the change to submit your pin
+  # only happens on first time you use a new browser
 
-  if pin_popup == None:
-    print('Pin not required')
-  else:
-    print('Pin required')
+  try:
+    print("Waiting for popup pin..")
+    pin_popup = page.wait_for_selector('div.modal-content', timeout=10000)
+    print('Pin popup is active')
     pin = input("What is the pin: ")
     page.type('input[ng-model="enteredPIN"]', pin)
     page.keyboard.press('Enter')
+  except:
+    print('Pin popup not found')
+
 
   page.wait_for_selector(f'button[aria-label="Start a new chat"]')
   print("Login at groupme successful")
