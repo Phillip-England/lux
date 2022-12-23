@@ -12,9 +12,12 @@ def catering_message_list(catering_dict):
         orders_for_day.append("BREAK")
         orders_for_day.append(day['date'])
         orders_for_day.append("BREAK")
+        orders_for_day.append("========================")
+        orders_for_day.append("BREAK")
         for order in day['pickup']:
             orders_for_day.append(order)
             orders_for_day.append("BREAK")
+        orders_for_day.append("BREAK")
         for order in day['delivery']:
             orders_for_day.append(order)
             orders_for_day.append("BREAK")

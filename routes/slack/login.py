@@ -1,5 +1,11 @@
 import time
 
 def login(page, login_url, username, password):
+  print("Attempting to login to slack..")
   page.goto(login_url)
-  time.sleep(20)
+  page.type('input[data-qa="login_email"]', username)
+  page.type('input[data-qa="login_password"]', password)
+  page.click('button[data-qa="signin_button"]')
+  page.wait_for_selector('div#c-coachmark-anchor')
+  print('Slack login successful')
+  return page

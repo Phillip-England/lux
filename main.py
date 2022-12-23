@@ -40,7 +40,9 @@ if __name__ == '__main__':
   # failsafe(slack_message, options={
   #   'username': os.environ['SLACK_USERNAME'],
   #   'password': os.environ['SLACK_PASSWORD'],
-  #   'account': 'test'
+  #   'account': 'test',
+  #   'message': catering_message_list(catering_orders), 
+  #   'channel_ids': ('C04EAJBBT4G', 'C04DZGFD9A5', 'C04EAJB016C')
   # })
 
   # cems = get_cems(options={
@@ -88,7 +90,7 @@ if __name__ == '__main__':
   failsafe(groupme_message, options={
     'account': 'test',
     'message': catering_message_list(catering_orders),
-    'headless': True
+    'headless': False
   })
 
   # failsafe(download_catering, options={
