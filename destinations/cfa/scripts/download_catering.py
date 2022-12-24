@@ -16,6 +16,7 @@ def download_catering(options):
     username = os.environ['SOUTHROADS_USERNAME']
     password = os.environ['SOUTHROADS_PASSWORD']
     servicepoint_pin = os.environ['SOUTHROADS_SERVICEPOINT_PIN']
+    os
 
   with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=headless)
@@ -23,12 +24,21 @@ def download_catering(options):
     page = cfa.routes.login_cfahome(page, username, password)
     page = cfa.routes.login_servicepoint(page, servicepoint_pin)
 
+    paths = []
+
     for date in dates:
 
       if date == 'tomorrow':  
         start = format_date(get_future_date(1))
         end = format_date(get_future_date(1))
         path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'catering', 'tomorrow.pdf')
+        paths.append(path)
+        try:
+          print(f"Attempting to delete: {path}")
+          os.remove(path)
+          print (f'Deleted file: {path}')
+        except:
+          print(f"Catering file does not exist at {path}")
       page = cfa.routes.download_catering(page, start, end, path)
 
-  return page
+  return paths

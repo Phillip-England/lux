@@ -1,9 +1,11 @@
 def failsafe(fn, count=0, **kwargs):
   try:
     if kwargs:
-      fn(kwargs['options'])
+      return_value = fn(kwargs['options'])
+      return return_value
     else:
-      fn()
+      return_value = fn()
+      return return_value
   except Exception as e:
     print(e)
     if count < 5:
