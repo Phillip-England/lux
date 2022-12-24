@@ -26,66 +26,39 @@ from date.get_future_date import get_future_date
 
 if __name__ == '__main__':
 
-
-  catering_orders = get_catering(options={
-    'files': {
-      'tomorrow': {
-        'label': 'tomorrow',
-        'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'catering', 'tomorrow.pdf')
-      }
-    }
+  failsafe(download_catering, options={
+    'account': 'southroads',
+    'dates': ['tomorrow'],
+    'headless': False
   })
 
+  failsafe(download_cems, options={
+    'account': 'southroads',
+    'dates': ['ytd', 'ndr', 'mtd'],
+    'headless': False
+  })
 
-  # failsafe(slack_message, options={
-  #   'username': os.environ['SLACK_USERNAME'],
-  #   'password': os.environ['SLACK_PASSWORD'],
-  #   'account': 'test',
-  #   'message': catering_message_list(catering_orders), 
-  #   'channel_ids': ('C04EAJBBT4G', 'C04DZGFD9A5', 'C04EAJB016C')
-  # })
+  catering_orders = get_catering(options={
+    'files': ['tomorrow'],
+    'account': 'southroads'
+  })
 
-  # cems = get_cems(options={
-  #   'files': {
-  #     'ytd': {
-  #       'label': 'ytd',
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ytd.pdf')
-  #     },
-  #     'ndr': {
-  #       'label': 'ndr',
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ndr.pdf')
-  #     },
-  #     'mtd': {
-  #       'label': 'mtd',
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'mtd.pdf')
-  #     }
-  #   }
-  # })
+  cems = get_cems(options={
+    'files': ['ytd', 'ndr', 'mtd'],
+    'account': 'southroads'
+  })
 
+  failsafe(slack_message, options={
+    'account': 'test',
+    'message_list': catering_message_list(catering_orders),
+    'headless': False
+  })
 
-
-  # failsafe(download_cems, options={
-  #   'username': os.environ['SOUTHROADS_USERNAME'], 
-  #   'password': os.environ['SOUTHROADS_PASSWORD'],
-  #   'dates': {
-  #     'ytd': {
-  #       'start': format_date(get_first_date_of_year()),
-  #       'end': format_date(get_last_date_of_year()),
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ytd.pdf')
-  #     },
-  #     'ndr': {
-  #       'start': format_date(get_past_date(90)),
-  #       'end': format_date(get_past_date(0)),
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'ndr.pdf')
-  #     },
-  #     'mtd': {
-  #       'start': format_date(get_first_date_of_month()),
-  #       'end': format_date(get_last_date_of_month()),
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'cems', 'mtd.pdf')
-  #     }
-  #   }
-  # })
-
+  failsafe(slack_message, options={
+    'account': 'test',
+    'message_list': cem_message_list(cems),
+    'headless': False
+  })
 
   failsafe(groupme_message, options={
     'account': 'test',
@@ -93,18 +66,13 @@ if __name__ == '__main__':
     'headless': False
   })
 
-  # failsafe(download_catering, options={
-  #   'username': os.environ['SOUTHROADS_USERNAME'], 
-  #   'password': os.environ['SOUTHROADS_PASSWORD'],
-  #   'servicepoint_pin': os.environ['SERVICEPOINT_PIN'],
-  #   'dates': {
-  #     'tomorrow': {
-  #       'start': format_date(get_future_date(1)),
-  #       'end': format_date(get_future_date(1)),
-  #       'path': os.path.join(os.getcwd(), 'downloads', 'cfa', 'southroads', 'catering', 'tomorrow.pdf')
-  #     }
-  #   }
-  # })
+  failsafe(groupme_message, options={
+    'account': 'test',
+    'message': cem_message_list(cems),
+    'headless': False
+  })
+
+
 
 
 

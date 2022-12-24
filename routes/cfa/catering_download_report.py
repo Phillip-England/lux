@@ -10,12 +10,14 @@ def catering_download_report(page, start_date, end_date, save_as):
   end_date_input = page.query_selector('input#MainContent_BusDate2_I')
   end_date_input.fill('')
   end_date_input.type(end_date)
-  with page.expect_download() as download_info:
-    page.click('input#MainContent_btnGenerateButton')
-    download = download_info.value
-    download.save_as(f'{save_as}')
-  time.sleep(5)
-  print(f'Catering report for {start_date}-{end_date} downloaded')
+  try:
+    with page.expect_download() as download_info:
+      page.click('input#MainContent_btnGenerateButton')
+      download = download_info.value
+      download.save_as(f'{save_as}')
+      print(f'Catering report for {start_date}-{end_date} downloaded')
+  except:
+    print(f'No catering report for {start_date}-{end_date}')
   return page
 
   
