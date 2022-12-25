@@ -18,6 +18,12 @@ def download_catering(options):
     servicepoint_pin = os.environ['SOUTHROADS_SERVICEPOINT_PIN']
     os
 
+  if account == 'test':
+    username = os.environ['SOUTHROADS_USERNAME']
+    password = os.environ['SOUTHROADS_PASSWORD']
+    servicepoint_pin = os.environ['SOUTHROADS_SERVICEPOINT_PIN']
+    os
+
   with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=headless)
     page = browser.new_page()
@@ -40,5 +46,11 @@ def download_catering(options):
         except:
           print(f"Catering file does not exist at {path}")
       page = cfa.routes.download_catering(page, start, end, path)
+
+      # enter future dates here if you decide to grab the next 3 days catering and display
+
+    for path in paths:
+      if os.path.exists(path) == False:
+        paths.remove(path)
 
   return paths

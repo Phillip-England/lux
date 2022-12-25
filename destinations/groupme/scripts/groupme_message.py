@@ -8,15 +8,14 @@ def groupme_message(options):
   groupme_message = options['message']
   headless = options['headless']
 
+  username = os.environ['GROUPME_USERNAME']
+  password = os.environ['GROUPME_PASSWORD']
+
   if account == 'test':
-    username = os.environ['GROUPME_TESTING_USERNAME']
-    password = os.environ['GROUPME_TESTING_PASSWORD']
-    chat_labels = ('Chat testing', 'Chat testing 2')
+    chat_labels = ['Chat Automation Testing']
 
   if account == 'southroads':
-    username = os.environ['GROUPME_TESTING_USERNAME']
-    password = os.environ['GROUPME_TESTING_PASSWORD']
-    chat_labels = 'Chat testing'
+    chat_labels = ['Chat Southroads Leadership']
 
   with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=headless)

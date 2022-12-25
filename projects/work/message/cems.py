@@ -3,29 +3,31 @@ from destinations import slack
 from destinations import groupme
 from util import failsafe
 
-def cems():
+def cems(options):
+
+  headless = options['headless']
+  account = options['account']
 
   failsafe(cfa.scripts.download_cems, options={
-    'account': 'southroads',
+    'account': account,
     'dates': ['ytd', 'ndr', 'mtd'],
-    'headless': False
+    'headless': headless
   })
 
   cems = cfa.data.get_cems(options={
     'files': ['ytd', 'ndr', 'mtd'],
-    'account': 'southroads'
+    'account': account
   })
 
-
   failsafe(slack.scripts.slack_message, options={
-    'account': 'test',
+    'account': account,
     'message_list': cfa.messages.get_cem_list(cems),
-    'headless': False
+    'headless': headless
   })
 
 
   failsafe(groupme.scripts.groupme_message, options={
-    'account': 'test',
+    'account': account,
     'message': cfa.messages.get_cem_list(cems),
-    'headless': False
+    'headless': headless
   })

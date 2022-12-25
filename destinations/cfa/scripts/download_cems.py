@@ -19,6 +19,10 @@ def download_cems(options):
     username = os.environ['SOUTHROADS_USERNAME']
     password = os.environ['SOUTHROADS_PASSWORD']
 
+  if account == 'test':
+    username = os.environ['SOUTHROADS_USERNAME']
+    password = os.environ['SOUTHROADS_PASSWORD']
+
   with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=headless)
     page = browser.new_page()
