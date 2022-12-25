@@ -4,7 +4,8 @@ import sys
 from dotenv import load_dotenv
 load_dotenv()
 
-from projects import work
+from projects import cfa_catering_message_project
+from projects import cfa_cem_message_project
 
 if __name__ == '__main__':
 
@@ -14,13 +15,13 @@ if __name__ == '__main__':
     headless = False  
 
   if sys.argv[1] == "catering":
-    work.message.catering({
+    cfa_catering_message_project({
       'headless': headless,
       'account': sys.argv[2]
     })
 
   if sys.argv[1] == 'cems':
-    work.message.cems({
+    cfa_cem_message_project({
       'headless': headless,
       'account': sys.argv[2]
     })

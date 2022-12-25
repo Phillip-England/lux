@@ -1,2 +1,2 @@
-from . import personal
-from . import work
+from .cfa_catering_message_project import cfa_catering_message_project
+from .cfa_cem_message_project import cfa_cem_message_project
