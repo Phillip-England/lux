@@ -20,6 +20,5 @@ def cfa_download_cems_route(page, start_date, end_date, save_as):
     page.click('div#rvsDownloadBTN')
     download = download_info.value
     download.save_as(f'{save_as}')
-  time.sleep(1)
   print(f'CEM report for {start_date}-{end_date} downloaded')
   return page

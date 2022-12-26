@@ -1,6 +1,6 @@
 import os
 
-import data
+from data import extract_catering_orders
 from util import pdf_to_text
 
 def get_catering(options):
@@ -14,7 +14,7 @@ def get_catering(options):
     if file == 'tomorrow':
       label = 'tomorrow'
       path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'catering', 'tomorrow.pdf')
-      orders = data.extract_catering_orders(pdf_to_text(path))
+      orders = extract_catering_orders(pdf_to_text(path))
       results[label] = orders
 
   return results

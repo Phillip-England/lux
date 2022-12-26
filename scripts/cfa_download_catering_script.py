@@ -48,7 +48,7 @@ def cfa_download_catering_script(options):
           print (f'Deleted file: {path}')
         except:
           print(f"Catering file does not exist at {path}")
-      page = cfa_download_catering_route(page, start, end, path)
+        page = cfa_download_catering_route(page, start, end, path)
 
       # enter future dates here if you decide to grab the next 3 days catering and display
 
