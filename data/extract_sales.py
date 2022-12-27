@@ -1,8 +1,9 @@
 from util import pdf_to_text
+from util import contains_substring
 
 def extract_sales(path):
 
-  pdf_data = pdf_to_text(path)
+  text = pdf_to_text(path)
 
   results = {
 
@@ -63,155 +64,49 @@ def extract_sales(path):
 
   }
 
-  # date indicators
-  date_indicator = 'Time:From'
-  day_of_week_steps = 1
-  month_steps = 2
-  day_steps = 3
-  year_steps = 4
+  is_final_section = False
+  destination_chunk_positions = []
+  destination_names = ['CARRY OUT', 'CFA DELIVERY', 'CURBSIDE', 'DELIVERY', 'DINE IN', 'DRIVE THRU', 'M-CARRYOUT', 'M-DINEIN', 'M-DRIVE-THRU', 'ON DEMAND', 'PICK']
 
-  # breakfast indicators
-  breakfast_indicator = 'Breakfast'
-  breakfast_sales_steps = 4
-  breakfast_transaction_steps = 6
-  breakfast_check_average_steps = 5
+  for i in range(len(text)):
+    
+    # getting date and day
+    if contains_substring(text[i], 'From'):
+      subphrase = []
+      words = text[i].split()
+      for i in range(len(words)):
+        if words[i] == 'From':
+          results['day'] = words[i+1][:-1]
+          month = words[i+2]
+          day_of_month = words[i+3]
+          year = words[i+4]
+          results['date'] = f'{month} {day_of_month} {year}'
+    
+    # getting total sales
+    if contains_substring(text[i], 'Report Totals:'):
+      is_final_section = True
+      results['total_transactions'] = text[i+1][:-1]
+      results['total_sales'] = text[i+2][:-1]
+      results['total_check_average'] = text[i+3][:-1]
 
-  # lunch indicators
-  lunch_indicator = 'Lunch'
-  lunch_sales_steps = 4
-  lunch_transaction_steps = 3
-  lunch_check_average_steps = 5
-
-  # midshift indicators
-  midshift_indicator = 'Afternoon'
-  midshift_sales_steps = 4
-  midshift_transaction_steps = 3
-  midshift_check_average_steps = 5
-
-  # dinner indicators
-  dinner_indicator = 'Dinner'
-  dinner_sales_steps = 4
-  dinner_transaction_steps = 3
-  dinner_check_average_steps = 5
-
-  # total indicators
-  total_indicator = 'Totals:'
-  total_sales_steps = 2
-  total_transaction_steps = 1
-  total_check_average_steps = 3
-
-  # daypart indicators
-  final_section_trigger = False
-  
-  for i in range(len(pdf_data)):
-
-    # pdf_data about the date
-    if pdf_data[i] == date_indicator:
-        day_of_week_untrimmed = pdf_data[i+day_of_week_steps]
-        day_of_week = day_of_week_untrimmed.rstrip(day_of_week_untrimmed[-1])
-        business_month = pdf_data[i+month_steps]
-        business_day = pdf_data[i+day_steps]
-        business_year = pdf_data[i+year_steps]
-        results['date'] = f'{business_month} {business_day} {business_year}'
-        results['day'] = day_of_week
-
-    #breakfast sales pdf_data
-    if pdf_data[i] == breakfast_indicator:
-        results['breakfast_sales'] = pdf_data[i + breakfast_sales_steps]
-        results['breakfast_transactions'] = pdf_data[i + breakfast_transaction_steps]
-        results['breakfast_check_average'] = pdf_data[i + breakfast_check_average_steps]
-
-    #lunch sales pdf_data
-    if pdf_data[i] == lunch_indicator:
-        results['lunch_sales'] = pdf_data[i + lunch_sales_steps]
-        results['lunch_transactions'] = pdf_data[i + lunch_transaction_steps]
-        results['lunch_check_average'] = pdf_data[i + lunch_check_average_steps]
-
-    #midshift sales pdf_data
-    if pdf_data[i] == midshift_indicator:
-        results['midshift_sales'] = pdf_data[i + midshift_sales_steps]
-        results['midshift_transactions'] = pdf_data[i + midshift_transaction_steps]
-        results['midshift_check_average'] = pdf_data[i + midshift_check_average_steps]
-
-    #dinner sales pdf_data
-    if pdf_data[i] == dinner_indicator:
-        results['dinner_sales'] = pdf_data[i + dinner_sales_steps]
-        results['dinner_transactions'] = pdf_data[i + dinner_transaction_steps]
-        results['dinner_check_average'] = pdf_data[i + dinner_check_average_steps]
-
-    #daily totals
-    if pdf_data[i] == total_indicator and pdf_data[i-1] == 'Report':
-        final_section_trigger = True
-        results['total_sales'] = pdf_data[i + total_sales_steps]
-        results['total_transactions'] = pdf_data[i + total_transaction_steps]
-        results['total_check_average'] = pdf_data[i + total_check_average_steps]
-
-    # carryout
-    if pdf_data[i] == 'Punch.CARRY' and pdf_data[i+1] == 'OUT' and final_section_trigger == True:
-      results['carryout_transactions'] = pdf_data[i+2]
-      results['carryout_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
-      results['carryout_check_average'] = pdf_data[i+3]
-
-    # cfa delivery
-    if pdf_data[i] == 'CFA' and pdf_data[i+1] == 'DELIVERY' and final_section_trigger == True:
-      results['cfa_delivery_transactions'] = pdf_data[i+2]
-      results['cfa_delivery_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
-      results['cfa_delivery_check_average'] = pdf_data[i+3]
-
-    # delivery
-    if pdf_data[i] == 'DELIVERY' and final_section_trigger == True:
-      results['delivery_transactions'] = pdf_data[i+1]
-      results['delivery_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['delivery_check_average'] = pdf_data[i+2]
-
-    # dine in
-    if pdf_data[i] == 'DINE' and pdf_data[i+1] == 'IN' and final_section_trigger == True:
-      results['dine_in_transactions'] = pdf_data[i+2]
-      results['dine_in_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
-      results['dine_in_check_average'] = pdf_data[i+3]
-
-    # drive thru
-    if pdf_data[i] == 'DRIVE' and pdf_data[i+1] == 'THRU' and final_section_trigger == True:
-      results['drive_thru_transactions'] = pdf_data[i+2]
-      results['drive_thru_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
-      results['drive_thru_check_average'] = pdf_data[i+3]
-
-    # mobile carryout
-    if pdf_data[i] == 'M-CARRYOUT' and final_section_trigger == True:
-      results['m_carryout_transactions'] = pdf_data[i+1]
-      results['m_carryout_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['m_carryout_check_average'] = pdf_data[i+2]
-
-    # mobile dine in
-    if pdf_data[i] == 'M-DINEIN' and final_section_trigger == True:
-      results['m_dine_in_transactions'] = pdf_data[i+1]
-      results['m_dine_in_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['m_dine_in_check_average'] = pdf_data[i+2]
+    # scanning for destination details
+    if is_final_section == True:
       
 
-    # mobile drive thru
-    if pdf_data[i] == 'M-DRIVE-THRU' and final_section_trigger == True:
-      results['m_drive_thru_transactions'] = pdf_data[i+1]
-      # dt sales attaches weird info to it, we have to split it off
-      results['m_drive_thru_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['m_drive_thru_check_average'] = pdf_data[i+2]
+      # checking if any of our destination names exist in current chunk of data
+      for destination in destination_names:
+        # if we find the destination in
+        if contains_substring(text[i], destination):
+          if i not in destination_chunk_positions:
+            destination_chunk_positions.append(i)
+  
+  print(destination_chunk_positions)
+        
 
-    # on demand
-    if pdf_data[i] == 'DEMAND' and final_section_trigger == True:
-      results['on_demand_transactions'] = pdf_data[i+1]
-      results['on_demand_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['on_demand_check_average'] = pdf_data[i+2]
 
-    # pickup
-    if pdf_data[i] == 'PICKUP' and final_section_trigger == True:
-      results['pickup_transactions'] = pdf_data[i+1]
-      results['pickup_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['pickup_check_average'] = pdf_data[i+2]
 
-    # pickup
-    if pdf_data[i] == 'CURBSIDE' and final_section_trigger == True:
-      results['curbside_transactions'] = pdf_data[i+1]
-      results['curbside_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
-      results['curbside_check_average'] = pdf_data[i+2]
+
+
+
 
   return results

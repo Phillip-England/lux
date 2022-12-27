@@ -1,10 +1,12 @@
+from pdfminer.high_level import extract_pages, extract_text
 import PyPDF2
 
-def pdf_to_text(pdf_file):
-  with open(pdf_file, 'rb') as file:
-    pdf = PyPDF2.PdfReader(file)
-    text = ""
-    for page in range(len(pdf.pages)):
-      page_text = pdf.pages[page].extract_text()
-      text += page_text
-    return text.split()
+def pdf_to_text(file_path):
+  pdf_text = []
+  for page_layout in extract_pages(file_path):
+    for element in page_layout:
+      try:
+        text = pdf_text.append(element.get_text())
+      except:
+        pass
+  return pdf_text
