@@ -1,4 +1,8 @@
-def extract_sales(pdf_data):
+from util import pdf_to_text
+
+def extract_sales(path):
+
+  pdf_data = pdf_to_text(path)
 
   results = {
 
@@ -145,43 +149,43 @@ def extract_sales(pdf_data):
     # carryout
     if pdf_data[i] == 'Punch.CARRY' and pdf_data[i+1] == 'OUT' and final_section_trigger == True:
       results['carryout_transactions'] = pdf_data[i+2]
-      results['carryout_sales'] = pdf_data[i+4]
+      results['carryout_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
       results['carryout_check_average'] = pdf_data[i+3]
 
     # cfa delivery
     if pdf_data[i] == 'CFA' and pdf_data[i+1] == 'DELIVERY' and final_section_trigger == True:
       results['cfa_delivery_transactions'] = pdf_data[i+2]
-      results['cfa_delivery_sales'] = pdf_data[i+4]
+      results['cfa_delivery_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
       results['cfa_delivery_check_average'] = pdf_data[i+3]
 
     # delivery
     if pdf_data[i] == 'DELIVERY' and final_section_trigger == True:
       results['delivery_transactions'] = pdf_data[i+1]
-      results['delivery_sales'] = pdf_data[i+3]
+      results['delivery_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
       results['delivery_check_average'] = pdf_data[i+2]
 
     # dine in
     if pdf_data[i] == 'DINE' and pdf_data[i+1] == 'IN' and final_section_trigger == True:
       results['dine_in_transactions'] = pdf_data[i+2]
-      results['dine_in_sales'] = pdf_data[i+4]
+      results['dine_in_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
       results['dine_in_check_average'] = pdf_data[i+3]
 
     # drive thru
     if pdf_data[i] == 'DRIVE' and pdf_data[i+1] == 'THRU' and final_section_trigger == True:
       results['drive_thru_transactions'] = pdf_data[i+2]
-      results['drive_thru_sales'] = pdf_data[i+4]
+      results['drive_thru_sales'] = pdf_data[i+4].replace('Daypart/DestinationTransaction', '')
       results['drive_thru_check_average'] = pdf_data[i+3]
 
     # mobile carryout
     if pdf_data[i] == 'M-CARRYOUT' and final_section_trigger == True:
       results['m_carryout_transactions'] = pdf_data[i+1]
-      results['m_carryout_sales'] = pdf_data[i+3]
+      results['m_carryout_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
       results['m_carryout_check_average'] = pdf_data[i+2]
 
     # mobile dine in
     if pdf_data[i] == 'M-DINEIN' and final_section_trigger == True:
       results['m_dine_in_transactions'] = pdf_data[i+1]
-      results['m_dine_in_sales'] = pdf_data[i+3]
+      results['m_dine_in_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
       results['m_dine_in_check_average'] = pdf_data[i+2]
       
 
@@ -195,7 +199,7 @@ def extract_sales(pdf_data):
     # on demand
     if pdf_data[i] == 'DEMAND' and final_section_trigger == True:
       results['on_demand_transactions'] = pdf_data[i+1]
-      results['on_demand_sales'] = pdf_data[i+3]
+      results['on_demand_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
       results['on_demand_check_average'] = pdf_data[i+2]
 
     # pickup
@@ -207,7 +211,7 @@ def extract_sales(pdf_data):
     # pickup
     if pdf_data[i] == 'CURBSIDE' and final_section_trigger == True:
       results['curbside_transactions'] = pdf_data[i+1]
-      results['curbside_sales'] = pdf_data[i+3]
+      results['curbside_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
       results['curbside_check_average'] = pdf_data[i+2]
 
   return results

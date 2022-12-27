@@ -11,6 +11,7 @@ def google_submit_sales_tracking_form_route(page, sales_data):
     page.keyboard.press('Tab')
   
   page.keyboard.press('Enter')
+  time.sleep(2)
   page.wait_for_selector('div.c2gzEf')
   print('Sales data successfully logged')
     

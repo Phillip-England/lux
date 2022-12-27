@@ -18,8 +18,10 @@ from util import get_last_date_of_year
 def cfa_download_sales_script(options):
   
   account = options['account']
-  dates = options['dates']
   headless = options['headless']
+  start_date = options['start_date']
+  end_date = options['end_date']
+  download_path = options['download_path']
 
   if account == 'southroads':
     username = os.environ['SOUTHROADS_USERNAME']
@@ -38,55 +40,20 @@ def cfa_download_sales_script(options):
     page = cfa_login_servicepoint_route(page, pin)
     page = cfa_goto_daypart_activity_route(page)
 
-    paths = []
+    try:
+      print(f'Attempting to delete: {download_path}')
+      os.remove(download_path)
+      print(f'Deleted: {download_path}')
+    except:
+      print(f'Does not exist to be deleted: {download_path}')
 
-    for date in dates:
+    page = cfa_download_daypart_activity_route(page, start_date, end_date, download_path)
 
-      if date == 'yesterday':
-        start = format_date(get_past_date(1))
-        end = format_date(get_past_date(1))
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'yesterday.pdf')
-        paths.append(path)
-        try:
-          print(f"Attempting to delete: {path}")
-          os.remove(os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'yesterday.pdf'))
-          print(f"Deleted: {path}")
-        except:
-          print(f"Does not exist to be deleted: {path}")
-        page = cfa_download_daypart_activity_route(page, start, end, path)
-
-      if date == 'mtd':
-        start = format_date(get_first_date_of_month())
-        end = format_date(get_last_date_of_month())
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'mtd.pdf')
-        paths.append(path)
-        try:
-          print(f"Attempting to delete: {path}")
-          os.remove(os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'mtd.pdf'))
-          print(f"Deleted: {path}")
-        except:
-          print(f"Does not exist to be deleted: {path}")
-        page = cfa_download_daypart_activity_route(page, start, end, path)
-
-      if date == 'ytd':
-        start = format_date(get_first_date_of_year())
-        end = format_date(get_last_date_of_year())
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'ytd.pdf')
-        paths.append(path)
-        try:
-          print(f"Attempting to delete: {path}")
-          os.remove(os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'ytd.pdf'))
-          print(f"Deleted: {path}")
-        except:
-          print(f"Does not exist to be deleted: {path}")
-        page = cfa_download_daypart_activity_route(page, start, end, path)
-
-      
-    for path in paths:
-      if os.path.exists(path) == False:
-        paths.remove(path)
-
-    return paths
+    if os.path.exists(download_path):
+      return True
+    else:
+      return False
+  
 
     
 
