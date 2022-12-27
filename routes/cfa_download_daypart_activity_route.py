@@ -14,3 +14,4 @@ def cfa_download_daypart_activity_route(page, start, end, save_as):
       print(f'Daypart activity downloaded for {start}-{end}')
   except:
     print(f"No daypart activity report for {start}-{end}")
+  return page

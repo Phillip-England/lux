@@ -11,3 +11,6 @@ from .groupme_message_route import groupme_message_route
 
 from .slack_login_route import slack_login_route
 from .slack_message_route import slack_message_route
+
+from .google_goto_sales_tracking_form_route import google_goto_sales_tracking_form_route
+from .google_submit_sales_tracking_form_route import google_submit_sales_tracking_form_route

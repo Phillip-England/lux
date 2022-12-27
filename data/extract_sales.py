@@ -1,56 +1,62 @@
 def extract_sales(pdf_data):
 
   results = {
+
     'date': '',
     'day': '',
-    'breakfast_sales': '',
-    'breakfast_transactions': '',
-    'breakfast_check_average': '',
-    'lunch_sales': '',
-    'lunch_transactions': '',
-    'lunch_check_average': '',
-    'midshift_sales': '',
-    'midshift_transactions': '',
-    'midshift_check_average': '',
-    'dinner_sales': '',
-    'dinner_transactions': '',
-    'dinner_check_average': '',
-    'total_sales': '',
-    'total_transactions': '',
-    'total_check_average': '',
-    'carryout_transactions': '',
-    'carryout_sales': '',
-    'carryout_check_average': '',
-    'cfa_delivery_transactions': '',
-    'cfa_delivery_sales': '',
-    'cfa_delivery_check_average': '',
-    'delivery_transactions': '',
-    'delivery_sales': '',
-    'delivery_check_average': '',
-    'dine_in_transactions': '',
-    'dine_in_sales': '',
-    'dine_in_check_average': '',
-    'drive_thru_transactions': '',
-    'drive_thru_sales': '',
-    'drive_thru_check_average': '',
-    'm_carryout_transactions': '',
-    'm_carryout_sales': '',
-    'm_carryout_check_average': '',
-    'm_dine_in_transactions': '',
-    'm_dine_in_sales': '',
-    'm_dine_in_check_average': '',
-    'm_drive_thru_transactions': '',
-    'm_drive_thru_sales': '',
-    'm_drive_thru_check_average': '',
-    'on_demand_transactions': '',
-    'on_demand_sales': '',
-    'on_demand_check_average': '',
-    'pickup_transactions': '',
-    'pickup_sales': '',
-    'pickup_check_average': '',
-    'curbside_transactions': '',
-    'curbside_sales': '',
-    'curbside_check_average': '',
+
+    'total_sales': '0',
+    'breakfast_sales': '0',
+    'lunch_sales': '0',
+    'midshift_sales': '0',
+    'dinner_sales': '0',
+    'dine_in_sales': '0',
+    'carryout_sales': '0',
+    'drive_thru_sales': '0',
+    'on_demand_sales': '0',
+    'cfa_delivery_sales': '0',
+    'm_dine_in_sales': '0',
+    'm_carryout_sales': '0',
+    'm_drive_thru_sales': '0',
+    'curbside_sales': '0',
+    'delivery_sales': '0',
+    'pickup_sales': '0',
+
+    'total_transactions': '0',
+    'breakfast_transactions': '0',
+    'lunch_transactions': '0',
+    'midshift_transactions': '0',
+    'dinner_transactions': '0',
+    'dine_in_transactions': '0',
+    'carryout_transactions': '0',
+    'drive_thru_transactions': '0',
+    'on_demand_transactions': '0',
+    'cfa_delivery_transactions': '0',
+    'm_dine_in_transactions': '0',
+    'm_carryout_transactions': '0',
+    'm_drive_thru_transactions': '0',
+    'curbside_transactions': '0',
+    'delivery_transactions': '0',
+    'pickup_transactions': '0',
+
+    'total_check_average': '0',
+    'breakfast_check_average': '0',
+    'lunch_check_average': '0',
+    'midshift_check_average': '0',
+    'dinner_check_average': '0',
+    'dine_in_check_average': '0',
+    'carryout_check_average': '0',
+    'drive_thru_check_average': '0',
+    'on_demand_check_average': '0',
+    'cfa_delivery_check_average': '0',
+    'm_dine_in_check_average': '0',
+    'm_carryout_check_average': '0',
+    'm_drive_thru_check_average': '0',
+    'curbside_check_average': '0',
+    'delivery_check_average': '0',
+    'pickup_check_average': '0',
+
+
   }
 
   # date indicators
@@ -137,7 +143,7 @@ def extract_sales(pdf_data):
         results['total_check_average'] = pdf_data[i + total_check_average_steps]
 
     # carryout
-    if pdf_data[i] == 'CARRY' and pdf_data[i+1] == 'OUT' and final_section_trigger == True:
+    if pdf_data[i] == 'Punch.CARRY' and pdf_data[i+1] == 'OUT' and final_section_trigger == True:
       results['carryout_transactions'] = pdf_data[i+2]
       results['carryout_sales'] = pdf_data[i+4]
       results['carryout_check_average'] = pdf_data[i+3]
@@ -195,7 +201,7 @@ def extract_sales(pdf_data):
     # pickup
     if pdf_data[i] == 'PICKUP' and final_section_trigger == True:
       results['pickup_transactions'] = pdf_data[i+1]
-      results['pickup_sales'] = pdf_data[i+3]
+      results['pickup_sales'] = pdf_data[i+3].replace('Daypart/DestinationTransaction', '')
       results['pickup_check_average'] = pdf_data[i+2]
 
     # pickup
