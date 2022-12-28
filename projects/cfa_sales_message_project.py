@@ -16,7 +16,7 @@ def cfa_sales_message_project(options):
 
   headless = options['headless']
   account = options['account']
-  download_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', '1.pdf')
+  download_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'test.pdf')
 
   # is_downloaded = failsafe(cfa_download_sales_script, options={
   #   'account': account,
@@ -32,7 +32,7 @@ def cfa_sales_message_project(options):
 
     sales_data = extract_sales(download_path)
 
-
+    
 
     # failsafe(google_sales_form_script, options={
     #   'data': sales_data,

@@ -1,9 +1,14 @@
+import re
+
+from pdfminer.high_level import extract_pages, extract_text
+
+
 from util import pdf_to_text
 from util import contains_substring
 
 def extract_sales(path):
 
-  text = pdf_to_text(path)
+  text = extract_text(path).split()
 
   results = {
 
@@ -64,49 +69,29 @@ def extract_sales(path):
 
   }
 
+  # looping variables
   is_final_section = False
-  destination_chunk_positions = []
-  destination_names = ['CARRY OUT', 'CFA DELIVERY', 'CURBSIDE', 'DELIVERY', 'DINE IN', 'DRIVE THRU', 'M-CARRYOUT', 'M-DINEIN', 'M-DRIVE-THRU', 'ON DEMAND', 'PICK']
+  carryout_sales = []
+  carryout_transactions = []
+  carryout_check_averages = []
+  cfa_delivery_sales = []
+  cfa_delivery_transactions = []
+  cfa_delivery_check_averages = []
 
   for i in range(len(text)):
-    
-    # getting date and day
-    if contains_substring(text[i], 'From'):
-      subphrase = []
-      words = text[i].split()
-      for i in range(len(words)):
-        if words[i] == 'From':
-          results['day'] = words[i+1][:-1]
-          month = words[i+2]
-          day_of_month = words[i+3]
-          year = words[i+4]
-          results['date'] = f'{month} {day_of_month} {year}'
-    
-    # getting total sales
-    if contains_substring(text[i], 'Report Totals:'):
+
+    # settings up final section trigger
+    if text[i] == 'Totals:':
       is_final_section = True
-      results['total_transactions'] = text[i+1][:-1]
-      results['total_sales'] = text[i+2][:-1]
-      results['total_check_average'] = text[i+3][:-1]
 
-    # scanning for destination details
-    if is_final_section == True:
-      
+    if text[i] == 'CARRY' and text[i+1] == 'OUT' and is_final_section == False:
+      carryout_transactions.append(text[i+2])
+      carryout_sales.append(text[i+3])
+      carryout_check_averages.append(text[i+4])
 
-      # checking if any of our destination names exist in current chunk of data
-      for destination in destination_names:
-        # if we find the destination in
-        if contains_substring(text[i], destination):
-          if i not in destination_chunk_positions:
-            destination_chunk_positions.append(i)
+    if text[i] == 'CFA' and text[i+1] == 'DELIVERY' and is_final_section == False:
+      cfa_delivery_transactions.append(text[i+2])
+      cfa_delivery_sales.append(text[i+3])
+      cfa_delivery_check_averages.append(text[i+4])
+
   
-  print(destination_chunk_positions)
-        
-
-
-
-
-
-
-
-  return results
