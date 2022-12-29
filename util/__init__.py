@@ -9,3 +9,5 @@ from .get_past_date import get_past_date
 from .pdf_to_text import pdf_to_text
 from .get_days_from_first_of_year import get_days_from_first_of_year
 from .contains_substring import contains_substring
+from .list_to_sum import list_to_sum
+from .list_to_average import list_to_average

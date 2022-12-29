@@ -1,3 +1,5 @@
+import time
+
 def slack_message_route(page, message_list, channel_ids):
   print('Attempting to send slack message')
 
@@ -9,5 +11,6 @@ def slack_message_route(page, message_list, channel_ids):
         else:
           page.type('div[data-qa="message_input"]', line)
     page.keyboard.press('Enter')
+    time.sleep(2)
 
     print('Slack messages sent')

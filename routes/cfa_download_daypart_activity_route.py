@@ -7,7 +7,7 @@ def cfa_download_daypart_activity_route(page, start, end, save_as):
   end_date_input.fill('')
   end_date_input.type(end)
   try:
-    with page.expect_download(timeout=5000) as download_info:
+    with page.expect_download() as download_info:
       page.click('input#MainContent_btnGenerateButton')
       download = download_info.value
       download.save_as(f'{save_as}')

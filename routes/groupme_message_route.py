@@ -10,5 +10,6 @@ def groupme_message_route(page, chat_labels, message_list):
       else:
         page.type('div[aria-label="Start typing and press enter to send"]', line)
     page.keyboard.press('Enter')
+    time.sleep(2)
     page.click('button[ng-click="closeChat()"]')
   print("Groupme message successfully sent")

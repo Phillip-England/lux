@@ -1,13 +1,13 @@
 def extract_cem_scores(pdf_data):
 
   results = {
+    'surveys': '',
     'osat': '',
     'taste': '',
     'speed': '',
     'ace': '',
     'clean': '',
     'accuracy': '',
-    'surveys': ''
   }
 
   # indicators
