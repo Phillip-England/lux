@@ -16,13 +16,13 @@ def cfa_sales_message_project(options):
   account = options['account']
   daypart_activity_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'sales', 'daypart_activity.pdf')
 
-  # is_downloaded = failsafe(cfa_download_sales_script, options={
-  #   'account': account,
-  #   'start_date': format_date(get_past_date(1)),
-  #   'end_date': format_date(get_past_date(1)),
-  #   'download_path': daypart_activity_path,
-  #   'headless': headless
-  # })
+  is_downloaded = failsafe(cfa_download_sales_script, options={
+    'account': account,
+    'start_date': format_date(get_past_date(1)),
+    'end_date': format_date(get_past_date(1)),
+    'download_path': daypart_activity_path,
+    'headless': headless
+  })
 
   is_downloaded = True
 
@@ -31,27 +31,24 @@ def cfa_sales_message_project(options):
 
     daypart_activity_data = extract_daypart_activity(daypart_activity_path)
 
-    for item in daypart_activity_data.items():
-      print(item)
+    if account != 'test':
+      failsafe(google_daypart_activity_script, options={
+        'data': daypart_activity_data,
+        'headless': headless
+      })
 
-    # if account != 'test':
-    #   failsafe(google_daypart_activity_script, options={
-    #     'data': daypart_activity_data,
-    #     'headless': headless
-    #   })
+    sales_message = get_sales_list(daypart_activity_data)
 
-    # sales_message = get_sales_list(daypart_activity_data)
+    failsafe(slack_message_script, options={
+      'account': account,
+      'message_list': sales_message,
+      'headless': headless
+    })
 
-    # failsafe(slack_message_script, options={
-    #   'account': account,
-    #   'message_list': sales_message,
-    #   'headless': headless
-    # })
-
-    # failsafe(groupme_message_script, options={
-    #   'account': account,
-    #   'message': sales_message,
-    #   'headless': headless
-    # })
+    failsafe(groupme_message_script, options={
+      'account': account,
+      'message': sales_message,
+      'headless': headless
+    })
 
 

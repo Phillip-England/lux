@@ -5,6 +5,8 @@ from .cfa_login_home_route import cfa_login_home_route
 from .cfa_login_servicepoint_route import cfa_login_servicepoint_route
 from .cfa_goto_daypart_activity_route import cfa_goto_daypart_activity_route
 from .cfa_download_daypart_activity_route import cfa_download_daypart_activity_route
+from .cfa_goto_time_detail_report_route import cfa_goto_time_detail_report_route
+from .cfa_download_time_detail_report_route import cfa_download_time_detail_report_route
 
 from .groupme_login_route import groupme_login_route
 from .groupme_message_route import groupme_message_route

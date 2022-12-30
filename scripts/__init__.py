@@ -5,3 +5,4 @@ from .cfa_download_cems_script import cfa_download_cems_script
 from .cfa_download_sales_script import cfa_download_sales_script
 from .google_daypart_activity_script import google_daypart_activity_script
 from .google_log_cems_script import google_log_cems_script
+from .cfa_download_time_punch_script import cfa_download_time_punch_script

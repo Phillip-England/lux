@@ -2,3 +2,4 @@ from .cfa_catering_message_project import cfa_catering_message_project
 from .cfa_cem_message_project import cfa_cem_message_project
 from .cfa_sales_message_project import cfa_sales_message_project
 from .cfa_sales_log_all_year_project import cfa_sales_log_all_year_project
+from .cfa_time_punch_email_project import cfa_time_punch_email_project
