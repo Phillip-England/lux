@@ -35,10 +35,11 @@ def cfa_cem_message_project(options):
     'accuracy': cems['recent']['accuracy'],
   }
 
-  failsafe(google_log_cems_script, options={
-    'data': recent_cems,
-    'headless': headless
-  })
+  if account != 'test':
+    failsafe(google_log_cems_script, options={
+      'data': recent_cems,
+      'headless': headless
+    })
 
   failsafe(slack_message_script, options={
     'account': account,
