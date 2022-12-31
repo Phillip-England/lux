@@ -1,5 +1,5 @@
 def cfa_fullscale_report_route(page):
-  print('Attemping to go to CEM report builder')
+  print('Attempting to go to CEM report builder..')
   page.goto('https://www.cfahome.com/go/appurl.go?app=SMGCLM')
   page.wait_for_selector('form[name="aspnetForm"]')
   page.goto('https://reporting.smg.com/ReportBuilder.aspx')

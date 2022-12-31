@@ -32,22 +32,16 @@ def cfa_download_cems_script(options):
     page = cfa_login_home_route(page, username, password)
     page = cfa_fullscale_report_route(page)
 
-    for date in dates:
-      if date == 'ytd':
-        start = format_date(get_first_date_of_year())
-        end = format_date(get_last_date_of_year())
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'ytd.pdf')
-      if date == 'ndr':
-        start = format_date(get_past_date(90))
-        end = format_date(get_past_date(0))
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'ndr.pdf')
-      if date == 'mtd':
-        start = format_date(get_first_date_of_month())
-        end = format_date(get_last_date_of_month())
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'mtd.pdf')
-      if date == 'recent':
-        start = format_date(get_past_date(3))
-        end = format_date(get_past_date(3))
-        path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'recent.pdf')
-      page = cfa_download_cems_route(page, start, end, path)
+    for timeframe in dates.values():
+      path = timeframe['path']
+      start_date = timeframe['start_date']
+      end_date = timeframe['end_date']
+      try:
+        print(f"Attempting to delete file: {path}")
+        os.remove(path)
+        print(f'File deleted: {path}')
+      except:
+        print(f'File does not exist to be deleted: {path}')
+      page = cfa_download_cems_route(page, start_date, end_date, path)
+
     return page

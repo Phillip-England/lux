@@ -8,7 +8,7 @@ def failsafe(fn, count=0, **kwargs):
       return return_value
   except Exception as e:
     print(e)
-    if count < 5:
+    if count < 10:
       if kwargs:
         failsafe(fn, count+1, options=kwargs['options'])
       else:
