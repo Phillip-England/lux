@@ -18,10 +18,10 @@ def cfa_time_punch_email_project(options):
   if account == 'southroads':
     send_to = os.environ['SOUTHROADS_EMAIL']
 
-  # download_path = failsafe(cfa_download_time_punch_script, options={
-  #   'headless': headless,
-  #   'account': account
-  # })
+  download_path = failsafe(cfa_download_time_punch_script, options={
+    'headless': headless,
+    'account': account
+  })
 
   # employee_names = failsafe(cfa_download_employee_bio_script, options={
   #   'headless': headless,
@@ -32,9 +32,7 @@ def cfa_time_punch_email_project(options):
 
   time_punch_message = extract_time_punch(pdf_to_text(download_path))
 
-  print(time_punch_message)
-
-  email_sender({
+  email_sender(options={
     'email': os.environ['AUTOMATION_EMAIL'],
     'password': os.environ['AUTOMATION_EMAIL_PASSWORD'],
     'send_to': send_to,

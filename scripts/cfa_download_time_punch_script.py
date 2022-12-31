@@ -28,7 +28,6 @@ def cfa_download_time_punch_script(options):
     browser = playwright.chromium.launch(headless=headless)
     context = browser.new_context()
     page = context.new_page()
-    page.expect_popup
     page = cfa_login_home_route(page, username, password)
     page = cfa_goto_time_detail_report_route(page)
     page = cfa_download_time_detail_report_route(page, context, options={
