@@ -1,8 +1,8 @@
 import os
 
-def google_goto_daypart_activity_route(page):
+def google_goto_sales_form_route(page, url):
   print('Attempting to load google sales tracking form..')
-  page.goto(os.environ['GOOGLE_SALES_TRACKING_FORM_URL'])
+  page.goto(url)
   page.wait_for_load_state('load')
   print('Google sales tracking form loaded')
   return page

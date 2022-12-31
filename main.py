@@ -9,12 +9,14 @@ from projects import cfa_cem_message_project
 from projects import cfa_sales_message_project
 from projects import cfa_sales_log_all_year_project
 from projects import cfa_time_punch_email_project
+from projects import cfa_sales_log_project
 
 if __name__ == '__main__':
 
-  try: 
-    if sys.argv[3] == '-h': headless = True
-  except: 
+
+  if '-h' in sys.argv: 
+    headless = True
+  else:
     headless = False
 
   if sys.argv[1] == "catering-message":
@@ -45,6 +47,13 @@ if __name__ == '__main__':
     cfa_time_punch_email_project({
       'headless': headless,
       'account': sys.argv[2]
+    })
+  
+  if sys.argv[1] == 'sales-log':
+    cfa_sales_log_project({
+      'headless': headless,
+      'account': sys.argv[2],
+      'date': sys.argv[3]
     })
 
 

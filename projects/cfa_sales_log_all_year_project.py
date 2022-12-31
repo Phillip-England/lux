@@ -5,7 +5,7 @@ from util import get_days_from_first_of_year
 from util import format_date
 from util import get_past_date
 from scripts import cfa_download_sales_script
-from scripts import google_daypart_activity_script
+from scripts import google_log_sales_script
 from data import extract_daypart_activity
 
 def cfa_sales_log_all_year_project(options):
@@ -32,9 +32,10 @@ def cfa_sales_log_all_year_project(options):
 
       sales_data = extract_daypart_activity(daypart_activity_path)
 
-      failsafe(google_daypart_activity_script, options={
+      failsafe(google_log_sales_script, options={
         'data': sales_data,
-        'headless': headless
+        'headless': headless,
+        'account': account
       })
 
        
