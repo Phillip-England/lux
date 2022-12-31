@@ -14,6 +14,7 @@ def cfa_download_time_punch_script(options):
 
   account = options['account']
   headless = options['headless']
+  save_as = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'time-punch', 'punch.pdf')
 
   if account == 'southroads':
     username = os.environ['SOUTHROADS_USERNAME']
@@ -33,7 +34,8 @@ def cfa_download_time_punch_script(options):
     page = cfa_download_time_detail_report_route(page, context, options={
       'start_date': format_date(get_past_date(30)),
       'end_date': format_date(get_past_date(0)),
-      'save_as': os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'time-punch', 'punch.pdf')
+      'save_as': save_as
     })
-    # time.sleep(20)
+  
+
   

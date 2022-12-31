@@ -3,6 +3,7 @@ from .groupme_message_script import groupme_message_script
 from .cfa_download_catering_script import cfa_download_catering_script
 from .cfa_download_cems_script import cfa_download_cems_script
 from .cfa_download_sales_script import cfa_download_sales_script
+from .cfa_download_time_punch_script import cfa_download_time_punch_script
+from .cfa_download_employee_bio_script import cfa_download_employee_bio_script
 from .google_log_sales_script import google_log_sales_script
 from .google_log_cems_script import google_log_cems_script
-from .cfa_download_time_punch_script import cfa_download_time_punch_script

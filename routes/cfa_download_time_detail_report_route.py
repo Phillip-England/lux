@@ -23,6 +23,12 @@ def cfa_download_time_detail_report_route(page, context, options):
   pdf_page.bring_to_front()
   time.sleep(5)
   with pdf_page.expect_download() as download_info:
+    try:
+      print(f'Attempting to delete: {save_as}')
+      os.remove(save_as)
+      print(f'Deleted file: {save_as}')
+    except:
+      print(f'No file exists to delete at: {save_as}')
     download_button_location = pyautogui.locateOnScreen(os.path.join(os.environ['PROJECT_PATH'], 'images', 'download_icon.png'))
     x, y = pyautogui.center(download_button_location)
     pyautogui.click(x, y)
