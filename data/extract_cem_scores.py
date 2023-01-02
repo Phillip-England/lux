@@ -1,20 +1,16 @@
 def extract_cem_scores(pdf_data):
 
   results = {
-    'surveys': '',
-    'osat': '',
-    'taste': '',
-    'speed': '',
-    'ace': '',
-    'clean': '',
-    'accuracy': '',
+    'surveys': '0',
+    'osat': 'N/A',
+    'taste': 'N/A',
+    'speed': 'N/A',
+    'ace': 'N/A',
+    'clean': 'N/A',
+    'accuracy': 'N/A',
   }
 
   # indicators
-  osat_indicator = 'Satisfaction'
-  osat_steps = 10
-  taste_indicator = 'Taste'
-  taste_steps = 10
   speed_indicator = 'Service'
   speed_steps = 10
   ace_indicator = 'Attentive/Courteous'
@@ -26,24 +22,37 @@ def extract_cem_scores(pdf_data):
 
   for i in range(len(pdf_data)):
 
-    if pdf_data[i] == osat_indicator:
-      results['osat'] = pdf_data[i+osat_steps]
 
-    if pdf_data[i] == taste_indicator:
+    if pdf_data[i] == 'Satisfaction':
+      results['osat'] = pdf_data[i+10]
+
+    if pdf_data[i] == 'Taste':
       if pdf_data[i+1] == '03253':
-        results['taste'] = pdf_data[i+taste_steps]
+        results['taste'] = pdf_data[i+10]
         results['surveys'] = pdf_data[i-2]
 
-    if pdf_data[i] == speed_indicator:
-      results['speed'] = pdf_data[i+speed_steps]
+    if pdf_data[i] == 'Service':
+      results['speed'] = pdf_data[i+10]
 
-    if pdf_data[i] == ace_indicator:
-      results['ace'] = pdf_data[i+ace_steps]
+    if pdf_data[i] == 'Attentive/Courteous':
+      results['ace'] = pdf_data[i+10]
 
-    if pdf_data[i] == clean_indicator:
-      results['clean'] = pdf_data[i+clean_steps]
+    if pdf_data[i] == 'Combined':
+      results['clean'] = pdf_data[i+10]
 
-    if pdf_data[i] == accuracy_indicator:
-      results['accuracy'] = pdf_data[i+accuracy_steps]
+    if pdf_data[i] == 'Accuracy':
+      results['accuracy'] = pdf_data[i+9]
+
+  # if not reponses have been submitted, we need to set values to N/A
+  # response destination with no surveys will end up having a value of 'Responses'
+  # this can occur at the very start of the month
+
+  if results['osat'] == 'Responses': results['osat'] = 'N/A'
+  if results['taste'] == 'Responses': results['taste'] = 'N/A'
+  if results['speed'] == 'Responses': results['speed'] = 'N/A'
+  if results['ace'] == 'Responses': results['ace'] = 'N/A'
+  if results['clean'] == 'Responses': results['clean'] = 'N/A'
+  if results['accuracy'] == 'Responses': results['accuracy'] = 'N/A'
+
 
   return results

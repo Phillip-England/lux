@@ -14,3 +14,6 @@ from .contains_substring import contains_substring
 from .list_to_sum import list_to_sum
 from .list_to_average import list_to_average
 from .email_sender import email_sender
+from .get_current_month import get_current_month
+from .first_day_of_prev_month import first_day_of_prev_month
+from .last_day_of_prev_month import last_day_of_prev_month

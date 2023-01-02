@@ -11,6 +11,7 @@ from projects import cfa_sales_log_all_year_project
 from projects import cfa_time_punch_email_project
 from projects import cfa_sales_log_project
 from projects import cfa_cem_log_project
+from projects import cfa_scorecard_project
 
 if __name__ == '__main__':
 
@@ -57,6 +58,12 @@ if __name__ == '__main__':
 
   if sys.argv[1] == 'time-punch':
     cfa_time_punch_email_project({
+      'headless': headless,
+      'account': sys.argv[2]
+    })
+
+  if sys.argv[1] == 'scorecard':
+    cfa_scorecard_project({
       'headless': headless,
       'account': sys.argv[2]
     })
