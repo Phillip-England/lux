@@ -31,8 +31,8 @@ def cfa_cem_message_project(options):
   mtd_cem_download_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'mtd.pdf')
   recent_cem_download_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'recent.pdf')
   pm_cem_download_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'pm.pdf')
-  day_of_week = format_date(get_day_of_week(3))
   recent_date = format_date(get_past_date(3))
+  day_of_week = get_day_of_week(get_date_object(3))
 
   failsafe(cfa_download_cems_script, options={
     'account': account,
