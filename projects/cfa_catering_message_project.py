@@ -25,11 +25,11 @@ def cfa_catering_message_project(options):
       'account': account
     })
 
-    failsafe(slack_message_script, options={
-      'account': account,
-      'message_list': get_catering_list(catering_orders),
-      'headless': headless
-    })
+    # failsafe(slack_message_script, options={
+    #   'account': account,
+    #   'message_list': get_catering_list(catering_orders),
+    #   'headless': headless
+    # })
 
     failsafe(groupme_message_script, options={
       'account': account,

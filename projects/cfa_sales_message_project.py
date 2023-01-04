@@ -37,11 +37,11 @@ def cfa_sales_message_project(options):
 
     sales_message = get_sales_list(daypart_activity_data)
 
-    failsafe(slack_message_script, options={
-      'account': account,
-      'message_list': sales_message,
-      'headless': headless
-    })
+    # failsafe(slack_message_script, options={
+    #   'account': account,
+    #   'message_list': sales_message,
+    #   'headless': headless
+    # })
 
     failsafe(groupme_message_script, options={
       'account': account,
