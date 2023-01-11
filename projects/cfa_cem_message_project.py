@@ -52,14 +52,21 @@ def cfa_cem_message_project(options):
   }
 
 
-  failsafe(cfa_download_cems_script, options={
-    'account': account,
-    'headless': headless,
-    'file_paths': file_paths
-  })
+  # failsafe(cfa_download_cems_script, options={
+  #   'account': account,
+  #   'headless': headless,
+  #   'file_paths': file_paths
+  # })
 
-  # recent_units = extract_cem_units(recent_units_cem_path)
+  recent_units = extract_cem_units(recent_units_cem_path)
+  mtd_units = extract_cem_units(mtd_units_cem_path)
+  ndr_units = extract_cem_units(ndr_units_cem_path)
+  ytd_units = extract_cem_units(ytd_units_cem_path)
 
+  print(recent_units)
+  print(mtd_units)
+  print(ndr_units)
+  print(ytd_units)
 
 
   # generate_cem_scorecard({
