@@ -1,3 +1,5 @@
+import time
+
 def cfa_fullscale_report_route(page):
   print('Attempting to go to CEM report builder..')
   page.goto('https://www.cfahome.com/go/appurl.go?app=SMGCLM')
@@ -7,5 +9,10 @@ def cfa_fullscale_report_route(page):
   select = page.query_selector('select#rbReportTypeSEL')
   select.select_option("33")
   page.wait_for_selector('input#rbStartDateTB')
+  page.click("div#measureDropDownContainer")
+  scores = ["Overall Satisfaction", "Taste", "Attentive", "Cleanliness Combined", "Fast Service", "Order Accuracy"]
+  for score in scores:
+    page.keyboard.type(score)
+    page.keyboard.press("Enter")
   print('CEM report builder loaded')
   return page

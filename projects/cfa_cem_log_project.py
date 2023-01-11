@@ -2,7 +2,7 @@ import os
 
 from scripts import cfa_download_cems_script
 from scripts import google_log_cems_script
-from data import extract_cem_scores
+# from data import extract_cem_scores
 from util import failsafe
 from util import pdf_to_text
 from util import get_date_object
@@ -29,7 +29,7 @@ def cfa_cem_log_project(options):
   })
 
   cems = {
-    'custom': extract_cem_scores(pdf_to_text(custom_cem_download_path)),
+    # 'custom': extract_cem_scores(pdf_to_text(custom_cem_download_path)),
   }
 
   date_object = get_date_object(date)
