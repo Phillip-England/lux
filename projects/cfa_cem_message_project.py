@@ -21,6 +21,8 @@ from util import first_day_of_prev_month
 
 from data import generate_cem_scorecard
 from data import extract_cem_units
+from data import extract_cem_time_of_day
+from data import extract_cem_type_of_visit
 from messages import get_cem_list
 
 def cfa_cem_message_project(options):
@@ -36,6 +38,9 @@ def cfa_cem_message_project(options):
   # mtd cem paths
   mtd_units_cem_path = os.path.join(os.environ["PROJECT_PATH"], 'downloads', 'cfa', f'{account}', 'cems', 'mtd_units.html')
 
+  # pm cem paths
+  pm_units_cem_path = os.path.join(os.environ["PROJECT_PATH"], 'downloads', 'cfa', f'{account}', 'cems', 'pm_units.html')
+
   # ndr cem paths  
   ndr_units_cem_path = os.path.join(os.environ["PROJECT_PATH"], 'downloads', 'cfa', f'{account}', 'cems', 'ndr_units.html')
 
@@ -47,10 +52,10 @@ def cfa_cem_message_project(options):
     'recent_time_of_day_cem_path': recent_time_of_day_cem_path,
     'recent_type_of_visit_cem_path': recent_type_of_visit_cem_path,
     'mtd_units_cem_path': mtd_units_cem_path,
+    'pm_units_cem_path': pm_units_cem_path,
     'ndr_units_cem_path': ndr_units_cem_path,
     'ytd_units_cem_path': ytd_units_cem_path
   }
-
 
   # failsafe(cfa_download_cems_script, options={
   #   'account': account,
@@ -59,14 +64,12 @@ def cfa_cem_message_project(options):
   # })
 
   recent_units = extract_cem_units(recent_units_cem_path)
+  recent_time_of_day = extract_cem_time_of_day(recent_time_of_day_cem_path)
+  recent_type_of_visit = extract_cem_type_of_visit(recent_type_of_visit_cem_path)
   mtd_units = extract_cem_units(mtd_units_cem_path)
+  pm_units = extract_cem_units(pm_units_cem_path)
   ndr_units = extract_cem_units(ndr_units_cem_path)
   ytd_units = extract_cem_units(ytd_units_cem_path)
-
-  print(recent_units)
-  print(mtd_units)
-  print(ndr_units)
-  print(ytd_units)
 
 
   # generate_cem_scorecard({

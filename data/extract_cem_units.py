@@ -18,12 +18,22 @@ def extract_cem_units(file_path):
       'speed': '',
       'ace': '',
       'clean': '',
-      'accuracy': ''
+      'accuracy': '',
+      'start_date': soup.select("div#__start_date")[0].text,
+      'end_date': soup.select("div#__end_date")[0].text,
+      'start_day_of_week': soup.select("div#__start_day_of_week")[0].text,
+      'end_day_of_week': soup.select("div#__end_day_of_week")[0].text
     }
 
-    ############
-    #  NEED TO HANDLE FILES WITHOUT DATA
-    ############
+    if soup.select("div#__error_exists")[0].text == "TRUE":
+      results['error'] = True
+    else:
+      results['error'] = False
+
+    error_message = results['error']
+
+    if error_message == True:
+      return results
 
     # getting all tds with score keywords
     osat_td = soup.find("td", text="Overall Satisfaction")
@@ -33,55 +43,19 @@ def extract_cem_units(file_path):
     clean_td = soup.find('td', text="Cleanliness Combined")
     accuracy_td = soup.find('td', text="Order Accuracy")
 
+    osat_table = osat_td.parent.parent
+    taste_table = taste_td.parent.parent
+    speed_table = speed_td.parent.parent
+    ace_table = ace_td.parent.parent
+    clean_table = clean_td.parent.parent
+    accuracy_table = accuracy_td.parent.parent
 
-    # deriving score tables from tds
-    osat_table = osat_td.parent.parent.parent
-    taste_table = taste_td.parent.parent.parent
-    speed_table = speed_td.parent.parent.parent
-    ace_table = ace_td.parent.parent.parent
-    clean_table = clean_td.parent.parent.parent
-    accuracy_table = accuracy_td.parent.parent.parent
-
-
-    # deriving sub tables within score tables
-    osat_sub_tables = osat_table.select('tr.BelowMinResp')
-    taste_sub_tables = taste_table.select('tr.BelowMinResp')
-    speed_sub_tables = speed_table.select('tr.BelowMinResp')
-    ace_sub_tables = ace_table.select('tr.BelowMinResp')
-    clean_sub_tables = clean_table.select('tr.BelowMinResp')
-    accuracy_sub_tables = accuracy_table.select('tr.BelowMinResp')
-
-
-    # using osat to get responses
-    osat_responses_element = osat_table.select('td.Default_Footer')[0]
-    responses = osat_responses_element.text.split(' ')[0]
-    results['responses'] = responses
-
-    # function to extract scores out of sub tables
-    def extract_score_from_sub_tables(sub_tables):
-      for i in range(len(sub_tables)):
-        current_text = sub_tables[i].text
-        if contains_substring(current_text, "Highly Satisfied"):
-          sub_table = sub_tables[i]
-          score = sub_table.select('td[align="right"]')[0].text.strip()
-          return score
-
-    def extract_accuracy_from_sub_tables(sub_tables):
-        for i in range(len(sub_tables)):
-          current_text = sub_tables[i].text
-          if contains_substring(current_text, "Yes"):
-            sub_table = sub_tables[i]
-            score = sub_table.select('td[align="right"]')[0].text.strip()
-            return score
-
-
-
-    results['osat'] = extract_score_from_sub_tables(osat_sub_tables)
-    results['taste'] = extract_score_from_sub_tables(taste_sub_tables)
-    results['speed'] = extract_score_from_sub_tables(speed_sub_tables)
-    results['ace'] = extract_score_from_sub_tables(ace_sub_tables)
-    results['clean'] = extract_score_from_sub_tables(clean_sub_tables)
-    results['accuracy'] = extract_accuracy_from_sub_tables(accuracy_sub_tables)
+    results['osat'] = osat_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
+    results['taste'] = taste_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
+    results['speed'] = speed_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
+    results['ace'] = ace_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
+    results['clean'] = clean_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
+    results['accuracy'] = accuracy_table.find(text=" Yes").find_parent().find_next_sibling().find_next_sibling().text.strip()
 
 
     return results
