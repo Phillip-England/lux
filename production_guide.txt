@@ -1,7 +1,8 @@
 1. Make sure .env is copied over to production env
-2. Change PROJECT_PATH in .env to reflect the new production env
-3. Install fonts and base images
-4. pip install -r requirements.txt
-5. Ensure slack messaging is turned off for time being
-6. Change batch scripts to point towards new production env
-7. Check task manager to ensure it is pointing to newly updated batch scripts
+2. Copy over downloads folder
+3. Change PROJECT_PATH in .env to reflect the new production env
+4. Install fonts and base images
+5. pip install -r requirements.txt
+6. Ensure slack messaging is turned off for time being
+7. Change batch scripts to point towards new production env
+8. Check task manager to ensure it is pointing to newly updated batch scripts

@@ -5,4 +5,5 @@ from .cfa_sales_log_all_year_project import cfa_sales_log_all_year_project
 from .cfa_time_punch_email_project import cfa_time_punch_email_project
 from .cfa_sales_log_project import cfa_sales_log_project
 from .cfa_cem_log_project import cfa_cem_log_project
+from .cfa_cem_log_past_45_days_project import cfa_cem_log_past_45_days_project
 from .cfa_scorecard_project import cfa_scorecard_project

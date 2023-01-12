@@ -12,6 +12,7 @@ from projects import cfa_time_punch_email_project
 from projects import cfa_sales_log_project
 from projects import cfa_cem_log_project
 from projects import cfa_scorecard_project
+from projects import cfa_cem_log_past_45_days_project
 
 if __name__ == '__main__':
 
@@ -36,6 +37,13 @@ if __name__ == '__main__':
       'date': sys.argv[2],
       'account': sys.argv[3],
     })
+
+  if sys.argv[1] == 'cem-log-past-45':
+    cfa_cem_log_past_45_days_project({
+      'headless': headless,
+      'account': sys.argv[2],
+    })
+
 
   if sys.argv[1] == 'sales-message':
     cfa_sales_message_project({
