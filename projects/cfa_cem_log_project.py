@@ -2,53 +2,49 @@ import os
 
 from scripts import cfa_download_cems_script
 from scripts import google_log_cems_script
-# from data import extract_cem_scores
+
+from data import extract_cem_units
+from data import extract_cem_time_of_day
+from data import extract_cem_type_of_visit
+from data import format_cems_for_logging
+
 from util import failsafe
-from util import pdf_to_text
 from util import get_date_object
 from util import get_day_of_week
-from util import format_date
-from util import get_past_date
 
 def cfa_cem_log_project(options):
+
   account = options['account']
   headless = options['headless']
   date = options['date']
-  custom_cem_download_path = os.path.join(os.environ['PROJECT_PATH'], 'downloads', 'cfa', f'{account}', 'cems', 'custom.pdf')
+
+  # recent cem paths
+  custom_units_cem_path = os.path.join(os.environ["PROJECT_PATH"], 'downloads', 'cfa', f'{account}', 'cems', 'custom_units.html')
+  custom_time_of_day_cem_path = os.path.join(os.environ["PROJECT_PATH"], 'downloads', 'cfa', f'{account}', 'cems', 'custom_time_of_day.html')
+  custom_type_of_visit_cem_path = os.path.join(os.environ["PROJECT_PATH"], 'downloads', 'cfa', f'{account}', 'cems', 'custom_type_of_visit.html')
+
+  file_paths = {
+    'custom_units_cem_path': custom_units_cem_path,
+    'custom_time_of_day_cem_path': custom_time_of_day_cem_path,
+    'custom_type_of_visit_cem_path': custom_type_of_visit_cem_path,
+  }
 
   failsafe(cfa_download_cems_script, options={
     'account': account,
-    'dates': {
-      'custom': {
-        'path': custom_cem_download_path,
-        'start_date': date,
-        'end_date': date
-      }
-    },
-    'headless': headless
+    'headless': headless,
+    'file_paths': file_paths,
+    'date': date
   })
 
-  cems = {
-    # 'custom': extract_cem_scores(pdf_to_text(custom_cem_download_path)),
-  }
+  custom_units = extract_cem_units(custom_units_cem_path)
+  custom_time_of_day = extract_cem_time_of_day(custom_time_of_day_cem_path)
+  custom_type_of_visit = extract_cem_type_of_visit(custom_type_of_visit_cem_path)
 
-  date_object = get_date_object(date)
-  day_of_week = get_day_of_week(date_object)
+  cems_for_logging = format_cems_for_logging(custom_units, custom_time_of_day, custom_type_of_visit)
 
-  custom_cems = {
-    'date': date,
-    'day_of_week': day_of_week,
-    'surveys': cems['custom']['surveys'],
-    'osat': cems['custom']['osat'],
-    'taste': cems['custom']['taste'],
-    'speed': cems['custom']['speed'],
-    'ace': cems['custom']['ace'],
-    'clean': cems['custom']['clean'],
-    'accuracy': cems['custom']['accuracy'],
-  }
 
   failsafe(google_log_cems_script, options={
-    'data': custom_cems,
+    'data': cems_for_logging,
     'headless': headless,
     'account': account
   })

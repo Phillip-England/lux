@@ -33,8 +33,8 @@ if __name__ == '__main__':
   if sys.argv[1] == 'cem-log':
     cfa_cem_log_project({
       'headless': headless,
-      'account': sys.argv[2],
-      'date': sys.argv[3]
+      'date': sys.argv[2],
+      'account': sys.argv[3],
     })
 
   if sys.argv[1] == 'sales-message':

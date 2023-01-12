@@ -19,6 +19,7 @@ def extract_cem_units(file_path):
       'ace': '',
       'clean': '',
       'accuracy': '',
+      'surveys': "0",
       'start_date': soup.select("div#__start_date")[0].text,
       'end_date': soup.select("div#__end_date")[0].text,
       'start_day_of_week': soup.select("div#__start_day_of_week")[0].text,
@@ -51,6 +52,7 @@ def extract_cem_units(file_path):
     accuracy_table = accuracy_td.parent.parent
 
     results['osat'] = osat_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
+    results['surveys'] = osat_table.select('td.Default_Footer')[0].text.strip().split(' ')[0]
     results['taste'] = taste_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
     results['speed'] = speed_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()
     results['ace'] = ace_table.find(text=" Highly Satisfied").find_parent().find_next_sibling().find_next_sibling().text.strip()

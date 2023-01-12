@@ -74,7 +74,7 @@ def extract_cem_type_of_visit(file_path):
       pass
 
     try:
-      osat_sub_table = osat_table.find_all(string=lambda text: 'Carry Out' in text)[0].find_parent().find_parent().find_next_sibling()
+      osat_sub_table = osat_table.find_all(string=lambda text: 'Carry' in text)[0].find_parent().find_parent().find_next_sibling()
       results['carry_out_osat'] =  osat_sub_table.select('td[align="right"]')[0].text.strip()
     except:
       pass
@@ -99,7 +99,7 @@ def extract_cem_type_of_visit(file_path):
       pass
 
     try:
-      taste_sub_table = taste_table.find_all(string=lambda text: 'Carry Out' in text)[0].find_parent().find_parent().find_next_sibling()
+      taste_sub_table = taste_table.find_all(string=lambda text: 'Carry' in text)[0].find_parent().find_parent().find_next_sibling()
       results['carry_out_taste'] =  taste_sub_table.select('td[align="right"]')[0].text.strip()
     except:
       pass
@@ -124,7 +124,7 @@ def extract_cem_type_of_visit(file_path):
       pass
 
     try:
-      speed_sub_table = speed_table.find_all(string=lambda text: 'Carry Out' in text)[0].find_parent().find_parent().find_next_sibling()
+      speed_sub_table = speed_table.find_all(string=lambda text: 'Carry' in text)[0].find_parent().find_parent().find_next_sibling()
       results['carry_out_speed'] =  speed_sub_table.select('td[align="right"]')[0].text.strip()
     except:
       pass
@@ -149,7 +149,7 @@ def extract_cem_type_of_visit(file_path):
       pass
 
     try:
-      ace_sub_table = ace_table.find_all(string=lambda text: 'Carry Out' in text)[0].find_parent().find_parent().find_next_sibling()
+      ace_sub_table = ace_table.find_all(string=lambda text: 'Carry' in text)[0].find_parent().find_parent().find_next_sibling()
       results['carry_out_ace'] =  ace_sub_table.select('td[align="right"]')[0].text.strip()
     except:
       pass
@@ -174,7 +174,7 @@ def extract_cem_type_of_visit(file_path):
       pass
 
     try:
-      clean_sub_table = clean_table.find_all(string=lambda text: 'Carry Out' in text)[0].find_parent().find_parent().find_next_sibling()
+      clean_sub_table = clean_table.find_all(string=lambda text: 'Carry' in text)[0].find_parent().find_parent().find_next_sibling()
       results['carry_out_clean'] =  clean_sub_table.select('td[align="right"]')[0].text.strip()
     except:
       pass
@@ -199,7 +199,7 @@ def extract_cem_type_of_visit(file_path):
       pass
 
     try:
-      accuracy_sub_table = accuracy_table.find_all(string=lambda text: 'Carry Out' in text)[0].find_parent().find_parent().find_next_sibling()
+      accuracy_sub_table = accuracy_table.find_all(string=lambda text: 'Carry' in text)[0].find_parent().find_parent().find_next_sibling()
       results['carry_out_accuracy'] =  accuracy_sub_table.select('td[align="right"]')[0].text.strip()
     except:
       pass
