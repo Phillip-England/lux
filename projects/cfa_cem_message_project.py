@@ -60,11 +60,11 @@ def cfa_cem_message_project(options):
     'ytd_units_cem_path': ytd_units_cem_path
   }
 
-  failsafe(cfa_download_cems_script, options={
-    'account': account,
-    'headless': headless,
-    'file_paths': file_paths
-  })
+  # failsafe(cfa_download_cems_script, options={
+  #   'account': account,
+  #   'headless': headless,
+  #   'file_paths': file_paths
+  # })
 
   recent_units = extract_cem_units(recent_units_cem_path)
   recent_time_of_day = extract_cem_time_of_day(recent_time_of_day_cem_path)
@@ -74,25 +74,25 @@ def cfa_cem_message_project(options):
   ndr_units = extract_cem_units(ndr_units_cem_path)
   ytd_units = extract_cem_units(ytd_units_cem_path)
 
-  generate_cem_scorecard({
-    'account': account,
-    'mtd_cems': mtd_units,
-  })
+  # generate_cem_scorecard({
+  #   'account': account,
+  #   'mtd_cems': mtd_units,
+  # })
 
-  failsafe(signpresenter_post_cem_scorecard_script, options={
-    'account': account,
-    'headless': headless
-  })
-
-
-  cems_for_logging = format_cems_for_logging(recent_units, recent_time_of_day, recent_type_of_visit)
+  # failsafe(signpresenter_post_cem_scorecard_script, options={
+  #   'account': account,
+  #   'headless': headless
+  # })
 
 
-  failsafe(google_log_cems_script, options={
-    'data': cems_for_logging,
-    'headless': headless,
-    'account': account
-  })
+  # cems_for_logging = format_cems_for_logging(recent_units, recent_time_of_day, recent_type_of_visit)
+
+
+  # failsafe(google_log_cems_script, options={
+  #   'data': cems_for_logging,
+  #   'headless': headless,
+  #   'account': account
+  # })
 
   # failsafe(slack_message_script, options={
   #   'account': account,

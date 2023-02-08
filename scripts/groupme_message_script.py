@@ -15,10 +15,10 @@ def groupme_message_script(options):
   password = os.environ['GROUPME_PASSWORD']
 
   if account == 'test':
-    chat_labels = ['Chat Automation Testing']
+    chat_labels = ['Automation Testing']
 
   if account == 'southroads':
-    chat_labels = ['Chat Southroads Leadership']
+    chat_labels = ['Southroads Leadership']
 
   with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=headless)

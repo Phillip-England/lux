@@ -3,7 +3,11 @@ import time
 def groupme_message_route(page, chat_labels, message_list):
   print('Attempting to send message on groupme...')
   for label in chat_labels:
-    page.click(f'div[aria-label="{label}"]')
+    page.click(f'input[placeholder="Find chats"]')
+    page.keyboard.type(label.lower())
+    page.keyboard.press('Tab')
+    page.keyboard.press('Tab')
+    page.keyboard.press('Enter')
     for line in message_list:
       if line == 'BREAK':
         page.keyboard.press("Shift+Enter")
