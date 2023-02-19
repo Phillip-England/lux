@@ -1,5 +1,6 @@
 def cfa_download_daypart_activity_route(page, start, end, save_as):
   print(f'Attempting to download daypart activity report for {start}-{end}..')
+  page.wait_for_selector('input#MainContent_BusDate1_I')
   start_date_input = page.query_selector('input#MainContent_BusDate1_I')
   end_date_input = page.query_selector('input#MainContent_BusDate2_I')
   start_date_input.fill('')

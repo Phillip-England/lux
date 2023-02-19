@@ -38,7 +38,7 @@ def cfa_download_sales_script(options):
     page = browser.new_page()
     page = cfa_login_home_route(page, username, password)
     page = cfa_login_servicepoint_route(page, pin)
-    page = cfa_goto_daypart_activity_route(page)
+    page = cfa_goto_daypart_activity_route(page, pin)
 
     try:
       print(f'Attempting to delete: {download_path}')
